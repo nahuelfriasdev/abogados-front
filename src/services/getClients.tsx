@@ -4,7 +4,7 @@ import { getCookie } from "./getCookie";
 const baseUrl =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_LOCAL // Usa la URL local en desarrollo
-    : import.meta.env.VITE_API_URL;
+    : import.meta.env.VITE_API_URL_PRODUCTION;
 
 const getClients = async ( token?: string): Promise<Client[]> => {
   const authToken = token || getCookie("authToken"); // Usa el token pasado como argumento o lo obtiene de las cookies
