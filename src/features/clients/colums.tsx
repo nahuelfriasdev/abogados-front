@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Función para crear las columnas dinámicamente
-export const createColumns = (onDelete: (userId: string) => void): ColumnDef<Client>[] => [
+export const createColumns = (onDelete: (userId: string) => void, onNavigate: (userId: string) => void): ColumnDef<Client>[] => [
   {
     accessorKey: "name",
     header: "Nombre",
@@ -45,6 +45,11 @@ export const createColumns = (onDelete: (userId: string) => void): ColumnDef<Cli
         onDelete(userId); // Llamar a la función onDelete pasada como prop
       };
 
+      const handleNavigate = () => {
+        const userId = row.original.userId || "0";
+        onNavigate(userId)
+      }
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -55,8 +60,8 @@ export const createColumns = (onDelete: (userId: string) => void): ColumnDef<Cli
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem>Ver Perfil</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>Eliminar</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" onClick={handleNavigate}>Ver Perfil</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete} className="cursor-pointer">Eliminar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/form"
 import createClient from "@/services/createClient";
 import deleteClientById from "@/services/deleteClientById";
+import { useNavigate } from "react-router-dom";
 
 const ClientTable = () => {
   const [clients, setClients] = useState<Client[]>([])
@@ -116,7 +117,13 @@ const ClientTable = () => {
     await deleteClientById(id, getClientsData);
   }
 
-  const columns = createColumns(handleDelete);
+  const Navigate = useNavigate();
+
+  const handleNavigate = (id: string) => {
+    Navigate(`../client/${id}`)
+  }
+
+  const columns = createColumns(handleDelete, handleNavigate);
 
   useEffect(() => {
     getClientsData();
@@ -125,159 +132,157 @@ const ClientTable = () => {
   return (
     <>
       <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={clients} setIsMenuOpen={setIsMenuOpen}/>
+        <DataTable columns={columns} data={clients} setIsMenuOpen={setIsMenuOpen} />
       </div>
-
+  
       {isMenuOpen && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-          <Card className="w-[450px]">
-            <CardHeader>
-              <CardTitle>Nuevo Cliente</CardTitle>
-              <CardDescription>Para crear el nuevo cliente llenar los campos requeridos</CardDescription>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-full max-w-3xl shadow-xl border border-gray-200 rounded-xl bg-white">
+            <CardHeader className="pb-2 border-b">
+              <CardTitle className="text-xl">Nuevo Cliente</CardTitle>
+              <CardDescription>Completá los siguientes campos para registrar un nuevo cliente.</CardDescription>
             </CardHeader>
-            <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <div className="flex justify-between items-center">
+  
+            <CardContent className="pt-6">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nombre</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: Juan" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="username"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Apellido</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: Pérez" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+  
+                    <FormField
+                      control={form.control}
+                      name="dni"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>DNI</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: 12345678" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Celular</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: 11 2345 6789" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+  
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: juan@example.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="causeType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Tipo de Causa</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: Laboral, Penal, etc." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+  
+                    <FormField
+                      control={form.control}
+                      name="locality"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Localidad</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: CABA, La Plata..." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="fileNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nº de Expediente</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: 1234/2024" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+  
                   <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nombre</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Apellido</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex justify-between items-center">
-                  <FormField
-                    control={form.control}
-                    name="dni"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Dni</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Celular</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                </div>
-                <div className="flex justify-between items-center">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="causeType"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tipo Causa</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                </div>
-                <div className="flex justify-between items-center">
-
-                  <FormField
-                    control={form.control}
-                    name="locality"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Localidad</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="fileNumber"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nº Expediente</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
                     control={form.control}
                     name="description"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Descripción</FormLabel>
                         <FormControl>
-                          <Textarea {...field} />
+                          <Textarea placeholder="Ej: Cliente demanda por despido injustificado..." {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                <div className="flex justify-between mt-5">
-                  <Button variant="outline" onClick={() => setIsMenuOpen(false)}>Cancelar</Button>
-                  <Button type="submit">Crear</Button>
-                </div>
-              </form>
-            </Form>
+  
+                  <div className="flex justify-end gap-4 pt-4 border-t">
+                    <Button variant="outline" onClick={() => setIsMenuOpen(false)}>Cancelar</Button>
+                    <Button type="submit">Crear Cliente</Button>
+                  </div>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </div>
       )}
     </>
-  )
+  );
+  
 }
 
 export default ClientTable

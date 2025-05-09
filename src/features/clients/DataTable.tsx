@@ -55,35 +55,39 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div>
-      <div className="rounded-md border">
-        <div className="flex justify-between items-center p-4">
+    <div className="w-full px-4 md:px-0">
+      <div className="rounded-xl border shadow-sm bg-white overflow-hidden">
+        
+        {/* Filtro y botón */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-6 border-b">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Buscar por DNI..."
             value={(table.getColumn("dni")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("dni")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="w-full md:max-w-sm"
           />
-          <Button onClick={toggleMenu}>Nuevo Cliente</Button>
+          <Button onClick={toggleMenu} className="w-full md:w-auto">
+            + Nuevo Cliente
+          </Button>
         </div>
-        <Table>
+  
+        {/* Tabla */}
+        <Table className="min-w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -103,21 +107,26 @@ export function DataTable<TData, TValue>({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No Tiene clientes registrados.
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-gray-500"
+                >
+                  No hay clientes registrados.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
-        <div className="flex items-center justify-end space-x-2 py-4">
+  
+        {/* Paginación */}
+        <div className="flex justify-end items-center gap-2 px-6 py-4 border-t">
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            previo
+            Anterior
           </Button>
           <Button
             variant="outline"
@@ -125,12 +134,13 @@ export function DataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            siguiente
+            Siguiente
           </Button>
         </div>
       </div>
     </div>
-  )
+  );
+  
 }
 
 

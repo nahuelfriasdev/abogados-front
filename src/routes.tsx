@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import ClientsPages from "./pages/ClientsPages";
 import HomePage from "./pages/HomePages";
+import PerfilPages from "./pages/PerfilPages";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/clients" element={<ClientsPages />} />
+            <Route path="/client/:id" element={<PerfilPages />} />
           </Route>
         </Route>
       </Routes>
