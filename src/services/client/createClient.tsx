@@ -1,5 +1,5 @@
 import { Client } from "@/types/client";
-import { getCookie } from "./getCookie";
+import { getCookie } from "../getCookie";
 
 const baseUrl =
   import.meta.env.MODE === "development"

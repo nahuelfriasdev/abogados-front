@@ -1,47 +1,56 @@
 "use client"
 
-import { useState } from "react"
-import { CheckCircle2, Circle, Plus, Filter } from "lucide-react"
+import { useEffect, useState } from "react"
+import { CheckCircle2, Circle, Plus, Filter, Trash2Icon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import getTasks from "@/services/task/getTasks"
+import { useParams } from "react-router-dom"
+import { Task, TaskDB } from "@/types/task"
+import createTask from "@/services/task/createTask"
+import deleteTask from "@/services/task/deleteTask"
+import checkTask from "@/services/task/checkTask"
 
-type Task = {
-  id: string
-  description: string
-  completed: boolean
-  createdAt: Date
-}
 
 export default function TaskList() {
-  // En una aplicación real, estos datos vendrían de una API o base de datos
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", description: "Revisar contrato de arrendamiento", completed: true, createdAt: new Date(2023, 4, 15) },
-    { id: "2", description: "Solicitar documentación adicional", completed: false, createdAt: new Date(2023, 4, 18) },
-    { id: "3", description: "Preparar demanda inicial", completed: false, createdAt: new Date(2023, 4, 20) },
-    { id: "4", description: "Agendar reunión de seguimiento", completed: false, createdAt: new Date(2023, 4, 22) },
-  ])
-
+  const [tasks, setTasks] = useState<Task[]>([])
   const [newTask, setNewTask] = useState("")
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all")
+  const { id } = useParams();
 
-  const toggleTaskStatus = (id: string) => {
-    setTasks(tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task)))
-  }
-
-  const addTask = () => {
-    if (newTask.trim() === "") return
-
-    const task: Task = {
-      id: Date.now().toString(),
-      description: newTask,
-      completed: false,
-      createdAt: new Date(),
+  const toggleTaskStatus = async (_id: string) => {
+  try {
+    // Encuentra la tarea que se va a actualizar
+    const taskToUpdate = tasks.find((task) => task._id === _id);
+    if (!taskToUpdate) {
+      console.error("Tarea no encontrada");
+      return;
     }
 
-    setTasks([...tasks, task])
-    setNewTask("")
+    // Actualiza el estado local inmediatamente (optimistic update)
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task._id === _id ? { ...task, completed: !task.completed } : task
+      )
+    );
+
+    // Llama a la función `checkTask` para actualizar el backend
+    await checkTask(_id,{ ...taskToUpdate, completed: !taskToUpdate.completed });
+
+    // Refresca los datos desde el backend para asegurar consistencia
+    await getTasksData();
+  } catch (error) {
+    console.error("Error al cambiar el estado de la tarea:", error);
+
+    // Si falla, revierte el cambio local para mantener la consistencia
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task._id === _id ? { ...task, completed: !task.completed } : task
+      )
+    );
   }
+};
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === "all") return true
@@ -49,6 +58,43 @@ export default function TaskList() {
     if (filter === "completed") return task.completed
     return true
   })
+
+  const addTask = async () => {
+    if (newTask.trim() === "") return
+    const today = new Date();
+    const task: TaskDB = {
+      userId: id || "",
+      title: newTask,
+      description: "",
+      completed: false,
+      date: today.toLocaleDateString('es-AR').toString(),
+    }
+    await createTask(task)
+
+    setNewTask("")
+    getTasksData()
+  }
+
+  const getTasksData = async () => {
+    if(!id) return;
+    const data = await getTasks(id)
+    setTasks(data)
+  }
+
+
+  const handleDelete = async (id:string) => {
+    try {
+      await deleteTask(id)
+      getTasksData()
+    } catch (error) {
+      console.error("error al borrar la tarea:", error)
+    }
+  }
+
+
+  useEffect(() => {
+    getTasksData()
+  },[id])
 
   return (
     <div>
@@ -90,8 +136,8 @@ export default function TaskList() {
           <p className="text-sm text-gray-500 text-center py-4">No hay tareas para mostrar</p>
         ) : (
           filteredTasks.map((task) => (
-            <div key={task.id} className="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors">
-              <button onClick={() => toggleTaskStatus(task.id)} className="mt-0.5 mr-3 flex-shrink-0">
+            <div key={task._id} className="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors">
+              <button onClick={() => toggleTaskStatus(task._id)} className="mt-0.5 mr-3 flex-shrink-0">
                 {task.completed ? (
                   <CheckCircle2 className="h-5 w-5 text-blue-500" />
                 ) : (
@@ -99,10 +145,13 @@ export default function TaskList() {
                 )}
               </button>
               <div className="flex-1">
-                <p className={`text-sm ${task.completed ? "text-gray-500 line-through" : "text-gray-800"}`}>
-                  {task.description}
-                </p>
-                <p className="text-xs text-gray-400 mt-1">{task.createdAt.toLocaleDateString()}</p>
+                <div className="flex justify-between">
+                  <p className={`text-sm ${task.completed ? "text-gray-500 line-through" : "text-gray-800"}`}>
+                    {task.title}
+                  </p>
+                  <button className="hover:text-red-500" onClick={() => handleDelete(task._id)}><Trash2Icon/></button>
+                </div>
+                <p className="text-xs text-gray-400 mt-1">{task.date}</p>
               </div>
             </div>
           ))
