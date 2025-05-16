@@ -1,4 +1,4 @@
-import getClients from "@/services/getClients"
+import getClients from "@/services/client/getClients";
 import { getCookie } from "@/services/getCookie";
 import { Client } from "@/types/client";
 import { useEffect, useState } from "react";
@@ -26,9 +26,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import createClient from "@/services/createClient";
-import deleteClientById from "@/services/deleteClientById";
+import deleteClientById from "@/services/client/deleteClientById";
 import { useNavigate } from "react-router-dom";
+import createClient from "@/services/client/createClient";
 
 const ClientTable = () => {
   const [clients, setClients] = useState<Client[]>([])

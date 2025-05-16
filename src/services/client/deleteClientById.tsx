@@ -1,4 +1,4 @@
-import deleteClient from "@/services/deleteClient";
+import deleteClient from "./deleteClient";
 
 const deleteClientById = async (
   clientId: string,
