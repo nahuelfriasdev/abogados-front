@@ -48,7 +48,7 @@ export default function ClientInfo() {
   }, [id])
 
   return (
-    <div>
+    <section>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium text-gray-800">Información del Cliente</h2>
         {isEditing ? 
@@ -59,7 +59,7 @@ export default function ClientInfo() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="space-y-4">
+        <article className="space-y-4">
           <div className="flex items-start">
             <div className="bg-blue-50 p-2 rounded-full mr-3">
               <User className="h-5 w-5 text-blue-500" />
@@ -86,7 +86,7 @@ export default function ClientInfo() {
             </div>
           </div>
 
-          <div className="flex items-start">
+          {/* <div className="flex items-start">
             <div className="bg-blue-50 p-2 rounded-full mr-3">
               <MapPin className="h-5 w-5 text-blue-500" />
             </div>
@@ -97,9 +97,8 @@ export default function ClientInfo() {
                 : <p className="font-medium text-gray-800">{clientData?.locality}</p>
               }
             </div>
-          </div>
+          </div> */}
 
-          
           <div className="flex items-start">
             <div className="bg-blue-50 p-2 rounded-full mr-3">
               <Calendar className="h-5 w-5 text-blue-500" />
@@ -112,9 +111,22 @@ export default function ClientInfo() {
               }
             </div>
           </div>
-          
-        </div>
-        <div className="space-y-4">
+
+          <div className="flex items-start">
+            <div className="bg-blue-50 p-2 rounded-full mr-3">
+              <MapPin className="h-5 w-5 text-blue-500" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Juzgado</p>
+              {isEditing ?
+                <Input value={clientData?.court} name="court" onChange={(e) => handleInputChange(e)}/>
+                : <p className="font-medium text-gray-800">{clientData?.court}</p>
+              }
+            </div>
+          </div>
+        </article>
+
+        <article className="space-y-4">
           <div className="flex items-start">
             <div className="bg-blue-50 p-2 rounded-full mr-3">
               <User className="h-5 w-5 text-blue-500" />
@@ -152,7 +164,21 @@ export default function ClientInfo() {
               }
             </div>
           </div>
-        </div>
+          
+           <div className="flex items-start">
+            <div className="bg-blue-50 p-2 rounded-full mr-3">
+              <MapPin className="h-5 w-5 text-blue-500" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Fiscalia</p>
+              {isEditing ?
+                <Input value={clientData?.da_office} name="da_office" onChange={(e) => handleInputChange(e)}/>
+                : <p className="font-medium text-gray-800">{clientData?.da_office}</p>
+              }
+            </div>
+          </div>
+        </article>
+
         <div className="flex items-start mt-5 md:col-span-2">
           <div className="bg-blue-50 p-2 rounded-full mr-3">
             <Calendar className="h-5 w-5 text-blue-500" />
@@ -166,7 +192,6 @@ export default function ClientInfo() {
           </div>
         </div>
       </div>
-      
-    </div>
+    </section>
   )
 }

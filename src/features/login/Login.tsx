@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import logo from "/iuris-logo3-sinfondo.png";
+import logo from "/lexjuri-logo3-sinfondo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/", { replace: true });
+      navigate("/home", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -48,7 +48,7 @@ const Login = () => {
     try {
         const res  = await authApi(email, password)
         login(res);
-        navigate("/");
+        navigate("/home");
     } catch (error) {
       console.error("error al iniciar sesión:", error);
     }
@@ -92,7 +92,7 @@ const Login = () => {
             </Button>
           </form>
         </Form>
-        <p className="text-center">desarrollado por Nafware</p>
+        <p className="text-center">desarrollado por Codendra</p>
       </article>
     </section>
   )

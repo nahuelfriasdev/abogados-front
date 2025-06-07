@@ -1,25 +1,30 @@
 import { ClientSummary, DashboardHeader, QuickAccess, TaskChecklist, UpcomingAppointments } from "@/features/home";
+import useAllTask from "@/hooks/useAllTask";
+import useLawyerData from "@/hooks/useLawyerData";
+import { LawyerData } from "@/types/lawyer";
+import { Task } from "@/types/task";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [data, setData] = useState<LawyerData | null>(null);
+  const [task, setTask] = useState<Task | null>(null);
+
+  useLawyerData({ setData });
+  useAllTask({ setTask });
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="container mx-auto px-4 py-8">
         <DashboardHeader
-          userName="Dra. Frias"
+          userName={data?.lawyer.name || "Cargando..."}
           activitySummary="3 casos nuevos esta semana, 2 audiencias pendientes"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <ClientSummary totalClients={128} newClients={5} />
+          <ClientSummary totalClients={data?.amountClients || 0} newClients={data?.amountClients || 0} />
 
           <TaskChecklist
-            tasks={[
-              { id: "1", title: "Preparar documentación para caso Rodríguez", completed: false, dueDate: "Hoy" },
-              { id: "2", title: "Revisar contrato para Empresa ABC", completed: false, dueDate: "Mañana" },
-              { id: "3", title: "Enviar notificación a cliente Gómez", completed: true, dueDate: "Completado" },
-              { id: "4", title: "Actualizar expediente caso López", completed: false, dueDate: "En 2 días" },
-              { id: "5", title: "Preparar facturación mensual", completed: false, dueDate: "Esta semana" },
-            ]}
+            tasks={Array.isArray(task) ? task : task ? [task] : []}
+            setTask={setTask}
           />
 
           <UpcomingAppointments

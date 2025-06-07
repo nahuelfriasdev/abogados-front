@@ -101,7 +101,9 @@ const ClientTable = () => {
         causeType: values.causeType,
         locality: values.locality,
         fileNumber: values.fileNumber,
-        description: values.description
+        description: values.description,
+        court: "",
+        da_office: ""
       }
 
       const data = await createClient(client)

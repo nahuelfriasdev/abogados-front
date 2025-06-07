@@ -13,7 +13,7 @@ const Layout = () => {
       </div>
 
       <footer className="bg-zinc-900 text-white text-center py-2 text-sm">
-        <p className="uppercase tracking-wider">Desarrollado por NsoFware</p>
+        <p className="uppercase tracking-wider">Desarrollado por Codendra</p>
       </footer>
     </div>
   );

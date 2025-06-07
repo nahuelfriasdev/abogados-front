@@ -9,6 +9,8 @@ export type Client = {
   locality: string;
   fileNumber: string;
   description: string;
+  court: string;
+  da_office: string;
 };
 
 export type ClientDB = {

@@ -15,14 +15,15 @@ interface UpcomingAppointmentsProps {
 
 export default function UpcomingAppointments({ appointments }: UpcomingAppointmentsProps) {
   return (
-    <Card className="border-slate-200 shadow-sm">
+    <Card className="border-slate-200 shadow-sm relative">
+      <p className="absolute top-[40%] right-[40%] uppercase font-semibold text-xl z-50">proximamente</p>
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-medium flex items-center gap-2 text-slate-800">
           <Calendar className="h-5 w-5 text-blue-800" />
           Próximas Citas
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="blur-sm">
         <div className="space-y-4">
           {appointments.map((appointment) => (
             <div key={appointment.id} className="bg-slate-50 rounded-lg p-3 border border-slate-100">

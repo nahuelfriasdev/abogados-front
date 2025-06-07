@@ -5,6 +5,10 @@ export type Task = {
   description: string
   completed: boolean
   date: string
+  clientName: {
+    name: string,
+    username: string
+  }
 }
 
 export type TaskDB = {

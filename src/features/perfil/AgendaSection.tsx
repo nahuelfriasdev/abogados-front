@@ -84,39 +84,45 @@ export default function AgendaSection() {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium text-gray-800">Agenda</h2>
 
-        <Button variant="outline" size="sm" className="h-8 text-gray-500">
+        <Button disabled variant="outline" size="sm" className="h-8 text-gray-500">
           Ver calendario
         </Button>
       </div>
 
-      <div className="space-y-3 max-h-[280px] overflow-y-auto pr-2">
-        {sortedEvents.map((event) => (
-          <div key={event.id} className="p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
-            <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs font-medium px-2 py-1 rounded-full ${getEventColor(event.type)}`}>
-                {getEventTypeName(event.type)}
-              </span>
-              <span className="text-xs text-gray-500">{event.date.toLocaleDateString()}</span>
-            </div>
+     <div className="relative">
+        <p className="absolute top-[40%] right-[40%] uppercase font-semibold text-xl">proximamente</p>
 
-            <h3 className="text-sm font-medium text-gray-800 mb-2">{event.title}</h3>
-
-            <div className="flex flex-col space-y-1">
-              <div className="flex items-center text-xs text-gray-500">
-                <Clock className="h-3.5 w-3.5 mr-1.5" />
-                <span>{event.time}</span>
+        <div className="space-y-3 max-h-[280px] overflow-y-auto pr-2 blur-sm">
+          {sortedEvents.map((event) => (
+            <div key={event.id} className="p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className={`text-xs font-medium px-2 py-1 rounded-full ${getEventColor(event.type)}`}>
+                  {getEventTypeName(event.type)}
+                </span>
+                <span className="text-xs text-gray-500">{event.date.toLocaleDateString()}</span>
               </div>
 
-              {event.location && (
+              <h3 className="text-sm font-medium text-gray-800 mb-2">{event.title}</h3>
+
+              <div className="flex flex-col space-y-1">
                 <div className="flex items-center text-xs text-gray-500">
-                  <MapPin className="h-3.5 w-3.5 mr-1.5" />
-                  <span>{event.location}</span>
+                  <Clock className="h-3.5 w-3.5 mr-1.5" />
+                  <span>{event.time}</span>
                 </div>
-              )}
+
+                {event.location && (
+                  <div className="flex items-center text-xs text-gray-500">
+                    <MapPin className="h-3.5 w-3.5 mr-1.5" />
+                    <span>{event.location}</span>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+     </div>
+
+
     </div>
   )
 }

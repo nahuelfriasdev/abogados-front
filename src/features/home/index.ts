@@ -1,5 +1,3 @@
-// export { default as Home } from "./Home";
-// export { default as ClientsTable} from './ClientsTable';
 export { default as  ClientSummary } from './ClientSummary'
 export { default as DashboardHeader } from './DashboardHeader'
 export { default as QuickAccess } from './QuickAccess'

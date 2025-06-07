@@ -1,26 +1,38 @@
 import useAuth from "@/hooks/useAuth";
-import logo from "/iuris-logo3-sinfondo.png";
+import logo from "/lexjuri-logo3-sinfondo.png";
 import { Button } from "./ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Calendar, FileText, Home, LogOut, Settings, Users } from "lucide-react";
+import { useState } from "react";
+import { LawyerData } from "@/types/lawyer";
+import useLawyerData from "@/hooks/useLawyerData";
 
 
 
 const Nav = () => {
+  const [data, setData] = useState<LawyerData | null>(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
 
+  useLawyerData({ setData });
+
   return (
     <aside className="w-64 bg-zinc-900 text-white flex flex-col px-4 py-6 shadow-lg">
       <div className="flex justify-center mb-6">
-        <img src={logo} alt="Logo Iuris" className="w-28 h-28 object-contain" />
+        <img src={logo} alt="Logo Lexjuri" className="w-28 h-28 object-contain" />
+      </div>
+
+      <div className="my-4 text-sm flex flex-col gap-y-2">
+        <p><strong>Nombre:</strong> Dr/a {data?.lawyer.name}</p>
+        <p><strong>FOLIO:</strong> Nº 4165165165</p>
+        <p><strong>Colegio:</strong> escuela de abogados nº5</p>
       </div>
 
       <nav className="flex flex-col gap-3 text-sm font-medium">
-        <Link to="/" className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-zinc-800 ${isActive("/") && "bg-zinc-800"}`}>
+        <Link to="/home" className={`flex items-center gap-2 px-3 py-2 rounded hover:bg-zinc-800 ${isActive("/") && "bg-zinc-800"}`}>
           <Home size={18} /> Inicio
         </Link>
 
