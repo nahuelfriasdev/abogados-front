@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PrivateRoute from "./components/PrivateRoute";
-import LoginPage from "./pages/LoginPage";
-import Layout from "./components/Layout";
-import ClientsPages from "./pages/ClientsPages";
-import HomePage from "./pages/HomePages";
-import PerfilPages from "./pages/PerfilPages";
+// import PrivateRoute from "./components/PrivateRoute";
+// import LoginPage from "./pages/LoginPage";
+// import Layout from "./components/Layout";
+// import ClientsPages from "./pages/ClientsPages";
+// import HomePage from "./pages/HomePages";
+// import PerfilPages from "./pages/PerfilPages";
 import LandingPages from "./pages/LandingPages";
-import RegisterPage from "./features/landing/Register";
-import CharacteristicsPages from "./pages/CharacteristicsPages";
+// import RegisterPage from "./features/landing/Register";
+// import CharacteristicsPages from "./pages/CharacteristicsPages";
 import LayoutLanding from "./components/LayoutLanding";
 
 const AppRoutes = () => {
@@ -16,17 +16,17 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<LayoutLanding />}>
           <Route path="/" element={<LandingPages />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/characteristics" element={<CharacteristicsPages />} />
+          {/* <Route path="/register" element={<RegisterPage />} />
+          <Route path="/characteristics" element={<CharacteristicsPages />} /> */}
         </Route>
-        <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Layout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/clients" element={<ClientsPages />} />
             <Route path="/client/:id" element={<PerfilPages />} />
           </Route>
-        </Route>
+        </Route> */}
       </Routes>
     </BrowserRouter>
   );

@@ -48,7 +48,12 @@ export default function Register() {
       newErrors.password = "La contraseña es requerida"
     } else if (formData.password.length < 8) {
       newErrors.password = "La contraseña debe tener al menos 8 caracteres"
+    } else if (!/^[a-zA-Z0-9!@#$%^&*()_+\-=\\[\];:'"|,.?/~` ]+$/.test(formData.password)) {
+      newErrors.password = "La contraseña contiene caracteres inválidos"
+    } else if (/[<>{}]/.test(formData.password)) {
+      newErrors.password = "No se permiten los caracteres < > { }"
     }
+
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -171,9 +176,17 @@ export default function Register() {
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={(e) => handleInputChange("password", e.target.value)}
+                    onPaste={(e) => e.preventDefault()} 
+                    onKeyDown={(e) => {
+                      const forbiddenChars = ['<', '>', '{', '}', '"'];
+                      if (forbiddenChars.includes(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
                     className={`h-11 pr-10 ${errors.password ? "border-red-500 focus-visible:ring-red-500" : "border-slate-300"}`}
                     placeholder="Mínimo 8 caracteres"
                   />
+
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}

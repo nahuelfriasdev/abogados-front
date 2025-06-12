@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { CheckCircle2, Circle, Plus, Filter, Trash2Icon } from "lucide-react"
+import { CheckCircle2, Circle, Plus, Filter, Trash2Icon, ChevronDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -11,12 +11,19 @@ import { Task, TaskDB } from "@/types/task"
 import createTask from "@/services/task/createTask"
 import deleteTask from "@/services/task/deleteTask"
 import checkTask from "@/services/task/checkTask"
+// import { Label } from "@/components/ui/label"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
 
 
 export default function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [newTask, setNewTask] = useState("")
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all")
+  const [open, setOpen] = useState(false)
+  const [date, setDate] = useState<Date | undefined>(undefined)
+
+
   const { id } = useParams();
 
   const toggleTaskStatus = async (_id: string) => {
@@ -116,7 +123,7 @@ export default function TaskList() {
         </DropdownMenu>
       </div>
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 items-center">
         <Input
           placeholder="Agregar nueva tarea..."
           value={newTask}
@@ -126,6 +133,34 @@ export default function TaskList() {
             if (e.key === "Enter") addTask()
           }}
         />
+
+        <div className="flex flex-col gap-3">
+
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                id="date"
+                className="w-48 justify-between font-normal"
+              >
+                {date ? date.toLocaleDateString() : "Select date"}
+                <ChevronDownIcon />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={date}
+                captionLayout="dropdown"
+                onSelect={(date) => {
+                  setDate(date)
+                  setOpen(false)
+                }}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+
         <Button size="sm" onClick={addTask} className="bg-blue-500 hover:bg-blue-600">
           <Plus className="h-4 w-4" />
         </Button>

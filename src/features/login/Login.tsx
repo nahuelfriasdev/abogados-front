@@ -20,15 +20,25 @@ const Login = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const formSchema = z.object({
-    email: z.string().min(2, {
-      message: "Email debe temer almenos 2 caracteres.",
-    }),
-    password: z.string().min(2,{
-      message: "la contraseña debe temer almenos 2 caracteres."
-    })
+const sanitizeInput = (str: string) => {
+  return str.replace(/[<>{}"]/g, ""); // remueve caracteres comunes de XSS
+};
 
-  })
+
+const formSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Email inválido." })
+    .max(100, { message: "Email demasiado largo." }),
+  password: z
+    .string()
+    .min(6, { message: "La contraseña debe tener al menos 6 caracteres." })
+    .max(100, { message: "Contraseña demasiado larga." })
+    .refine(val => /^[\x20-\x7E]+$/.test(val), {
+      message: "Caracteres inválidos detectados.",
+    }),
+});
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,8 +53,8 @@ const Login = () => {
   }
 
   const onSubmit = async(values: z.infer<typeof formSchema>) => {
-    const { email, password} = values;
-
+    const email = sanitizeInput(values.email);
+    const password = sanitizeInput(values.password);
     try {
         const res  = await authApi(email, password)
         login(res);
@@ -81,15 +91,16 @@ const Login = () => {
                 <FormItem>
                   <FormLabel className="text-white">password</FormLabel>
                   <FormControl>
-                    <Input className="bg-white" type="password" {...field} />
+                    <Input className="bg-white" onPaste={(e) => e.preventDefault()}  type="password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              Iniciar Sesión
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? "Ingresando..." : "Iniciar Sesión"}
             </Button>
+
           </form>
         </Form>
         <p className="text-center">desarrollado por Codendra</p>

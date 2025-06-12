@@ -27,8 +27,8 @@ const Nav = () => {
 
       <div className="my-4 text-sm flex flex-col gap-y-2">
         <p><strong>Nombre:</strong> Dr/a {data?.lawyer.name}</p>
-        <p><strong>FOLIO:</strong> Nº 4165165165</p>
-        <p><strong>Colegio:</strong> escuela de abogados nº5</p>
+        <p><strong>FOLIO:</strong> Nº {data?.lawyer.folio}</p>
+        <p><strong>Colegio:</strong> {data?.lawyer.school}</p>
       </div>
 
       <nav className="flex flex-col gap-3 text-sm font-medium">

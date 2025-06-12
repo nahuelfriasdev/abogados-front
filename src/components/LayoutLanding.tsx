@@ -1,5 +1,6 @@
-import { Scale } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
+import logo from "/logoSoloSinFondo.png"
+import logoClaro from "/logoClaro.png"
 
 
 const LayoutLanding = () => {
@@ -8,7 +9,7 @@ const LayoutLanding = () => {
         <header className="border-b border-gray-200 bg-white/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Scale className="h-8 w-8 text-blue-600" />
+            <img src={logo} className="h-16 w-16" alt="" />
             <span className="text-2xl font-bold text-gray-900">Lexjuri</span>
           </div>
           <nav className="hidden md:flex items-center space-x-8">
@@ -35,7 +36,7 @@ const LayoutLanding = () => {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <Scale className="h-6 w-6 text-blue-400" />
+              <img src={logoClaro} className="h-12 w-14" alt="" />
               <span className="text-xl font-bold">Lexjuri</span>
             </div>
             <nav className="flex flex-wrap justify-center md:justify-end gap-6 mb-4 md:mb-0">
