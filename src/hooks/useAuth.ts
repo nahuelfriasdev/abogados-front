@@ -1,23 +1,33 @@
-import { deleteCookie, getCookie } from "@/services/getCookie";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+const baseUrl =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_API_URL_LOCAL
+    : import.meta.env.VITE_API_URL_PRODUCTION;
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = getCookie("authToken");
-    setIsAuthenticated(!!token);
-    setIsLoading(false);
+    // Llama al backend para saber si el usuario está logueado
+    fetch(`${baseUrl}/auth/check`, {
+      credentials: "include", // ⬅️ importante para enviar cookies HttpOnly
+    })
+      .then((res) => setIsAuthenticated(res.ok))
+      .catch(() => setIsAuthenticated(false))
+      .finally(() => setIsLoading(false));
   }, []);
 
-  const login = (token: string) => {
-    document.cookie = `authToken=${token}; path=/; max-age=3600; secure; samesite=strict`;
+  const login = () => {
     setIsAuthenticated(true);
   };
 
-  const logout = () => {
-    deleteCookie("authToken");
+  const logout = async () => {
+    await fetch(`${baseUrl}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+
     setIsAuthenticated(false);
   };
 
