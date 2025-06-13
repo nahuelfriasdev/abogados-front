@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import PerfilPages from "./pages/PerfilPages";
 import LandingPages from "./pages/LandingPages";
 // import RegisterPage from "./features/landing/Register";
-// import CharacteristicsPages from "./pages/CharacteristicsPages";
 import LayoutLanding from "./components/LayoutLanding";
 
 const AppRoutes = () => {
@@ -16,8 +15,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<LayoutLanding />}>
           <Route path="/" element={<LandingPages />} />
-          {/* <Route path="/register" element={<RegisterPage />} />
-          <Route path="/characteristics" element={<CharacteristicsPages />} /> */}
+          {/* <Route path="/register" element={<RegisterPage />} />*/}
         </Route>
         {/* <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
