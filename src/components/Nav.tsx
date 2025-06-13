@@ -1,5 +1,5 @@
 import useAuth from "@/hooks/useAuth";
-import logo from "/lexjuri-logo3-sinfondo.png";
+import logo from "/logoSinFondo.png";
 import { Button } from "./ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Calendar, FileText, Home, LogOut, Settings, Users } from "lucide-react";

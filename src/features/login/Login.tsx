@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import logo from "/lexjuri-logo3-sinfondo.png";
+import logo from "/logoSinFondo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -56,8 +56,8 @@ const formSchema = z.object({
     const email = sanitizeInput(values.email);
     const password = sanitizeInput(values.password);
     try {
-        const res  = await authApi(email, password)
-        login(res);
+        await authApi(email, password)
+        login();
         navigate("/home");
     } catch (error) {
       console.error("error al iniciar sesión:", error);
