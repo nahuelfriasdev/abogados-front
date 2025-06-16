@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import ClientsPages from "./pages/ClientsPages";
 import HomePage from "./pages/HomePages";
 import PerfilPages from "./pages/PerfilPages";
-// import LandingPages from "./pages/LandingPages";
+import LandingPages from "./pages/LandingPages";
 import RegisterPage from "./features/landing/Register";
 import LayoutLanding from "./components/LayoutLanding";
 
@@ -14,7 +14,7 @@ const AppRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LayoutLanding />}>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LandingPages />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
