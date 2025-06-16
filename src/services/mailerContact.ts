@@ -1,25 +1,28 @@
+import { MailerContact } from "@/types/mailer";
+
 const baseUrl =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_LOCAL // Usa la URL local en desarrollo
     : import.meta.env.VITE_API_URL_PRODUCTION;
 
-const getAllTasks = async () => {
-  const response = await fetch(`${baseUrl}/task`, {
-    method: 'GET',
+const mailerContact = async (formData: MailerContact) => {
+  const response = await fetch(`${baseUrl}/mailer/contact`, {
+    method: 'POST',
     credentials: 'include',
     headers:{
       'content-type': 'application/json',
-    }
+    },
+    body: JSON.stringify(formData)
   });
   if(!response.ok){
-    throw new Error("Error al obtener las tareas")
+    throw new Error("Error al enviar el email")
   } 
 
   const data = await response.json();
   if (data.error){
     throw new Error(data.Error)
   }
-  return data.allTask;
+  return data;
 }
 
-export default getAllTasks;
+export default mailerContact;
