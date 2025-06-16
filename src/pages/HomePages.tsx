@@ -1,16 +1,17 @@
-import { ClientSummary, DashboardHeader, QuickAccess/*, TaskChecklist*/, UpcomingAppointments } from "@/features/home";
-// import useAllTask from "@/hooks/useAllTask";
+import { ClientSummary, DashboardHeader, QuickAccess, TaskChecklist, UpcomingAppointments } from "@/features/home";
+import useAllTask from "@/hooks/useAllTask";
 import useLawyerData from "@/hooks/useLawyerData";
 import { LawyerData } from "@/types/lawyer";
-// import { Task } from "@/types/task";
+import { Task } from "@/types/task";
 import { useState } from "react";
 
 const HomePage = () => {
   const [data, setData] = useState<LawyerData | null>(null);
-  // const [task, setTask] = useState<Task | null>(null);
+  const [task, setTask] = useState<Task | Task[] | null>(null);
+
 
   useLawyerData({ setData });
-  // useAllTask({ setTask });
+  useAllTask({ setTask });
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="container mx-auto px-4 py-8">
@@ -22,10 +23,10 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <ClientSummary totalClients={data?.amountClients || 0} newClients={data?.amountClients || 0} />
 
-          {/* <TaskChecklist
+          <TaskChecklist
             tasks={Array.isArray(task) ? task : task ? [task] : []}
             setTask={setTask}
-          /> */}
+          />
 
           <UpcomingAppointments
             appointments={[
