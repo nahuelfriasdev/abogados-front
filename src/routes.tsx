@@ -15,9 +15,9 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<LayoutLanding />}>
           <Route path="/" element={<LandingPages />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
-        <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Layout />}>
             <Route path="/home" element={<HomePage />} />

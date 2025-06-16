@@ -2,7 +2,6 @@ import { Link, Outlet } from "react-router-dom";
 import logo from "/logoSoloSinFondo.png"
 import logoClaro from "/logoClaro.png"
 
-
 const LayoutLanding = () => {
   return (
     <div className="flex flex-col min-h-screen bg-white">
