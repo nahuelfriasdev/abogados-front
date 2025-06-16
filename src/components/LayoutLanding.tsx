@@ -9,18 +9,18 @@ const LayoutLanding = () => {
         <div className="container mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <img src={logo} className="h-14 w-14" alt="" />
-            <span className="text-2xl font-bold text-gray-900">Lexjuri</span>
+            <span className="text-2xl font-bold text-gray-900">Lexjuri</span><span className="text-blue-700 hover:bg-blue-100">Beta</span>
           </div>
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
               Inicio
             </Link>
-            <Link to="/characteristics" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+            <a href="#caracteristicas" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
               Características
-            </Link>
-            <Link to="#" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+            </a>
+            <a href="#precios" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
               Precios
-            </Link>
+            </a>
             <Link to="/login" className="border-blue-600 text-white hover:bg-blue-700 px-2 py-1 rounded-md bg-blue-600">
               Iniciar sesión
             </Link>
@@ -36,7 +36,7 @@ const LayoutLanding = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <img src={logoClaro} className="h-12 w-14" alt="" />
-              <span className="text-xl font-bold">Lexjuri</span>
+              <span className="text-xl font-bold">Lexjuri</span><span className="text-blue-400 hover:bg-blue-100">Beta</span>
             </div>
             <nav className="flex flex-wrap justify-center md:justify-end gap-6 mb-4 md:mb-0">
               <Link to="#" className="text-gray-400 hover:text-white transition-colors">

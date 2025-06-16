@@ -11,7 +11,7 @@ import { z } from "zod";
 import { Eye, EyeOff, Lock, Mail, Scale } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-label";
-import { Separator } from "@/components/ui/separator";
+// import { Separator } from "@/components/ui/separator";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +81,7 @@ const formSchema = z.object({
 
             <CardContent className="space-y-6">
               <div className="space-y-3">
-                <Button
+                {/* <Button
                   variant="outline"
                   className="w-full h-12 border-gray-300 hover:bg-gray-50"
                   onClick={() => console.log("Google login")}
@@ -105,15 +105,15 @@ const formSchema = z.object({
                     />
                   </svg>
                   Continuar con Google
-                </Button>
+                </Button> */}
               </div>
 
-              <div className="relative">
+              {/* <div className="relative">
                 <Separator className="my-6" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="bg-white px-4 text-sm text-gray-500">o continúa con email</span>
                 </div>
-              </div>
+              </div> */}
 
               {/* Email/Password Form */}
               <Form {...form}>
@@ -167,7 +167,7 @@ const formSchema = z.object({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <input
                         id="remember"
@@ -181,7 +181,7 @@ const formSchema = z.object({
                     <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
                       ¿Olvidaste tu contraseña?
                     </Link>
-                  </div>
+                  </div> */}
 
                   <Button type="submit" className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium">
                     Iniciar Sesión
@@ -190,12 +190,12 @@ const formSchema = z.object({
               </Form>
               {/* Additional Links */}
               <div className="text-center space-y-4">
-                <div className="text-sm text-gray-600">
+                {/* <div className="text-sm text-gray-600">
                   ¿Primera vez en LexJuri?{" "}
                   <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
                     Crear cuenta gratis
                   </Link>
-                </div>
+                </div> */}
 
                 <div className="pt-4 border-t border-gray-200">
                   <p className="text-xs text-gray-500 text-center">
