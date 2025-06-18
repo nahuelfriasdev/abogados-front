@@ -52,10 +52,6 @@ const formSchema = z.object({
     },
   })
 
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
-
   const onSubmit = async(values: z.infer<typeof formSchema>) => {
     const email = sanitizeInput(values.email);
     const password = sanitizeInput(values.password);
@@ -183,7 +179,7 @@ const formSchema = z.object({
                     </Link>
                   </div>
 
-                  <Button type="submit" className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium">
+                  <Button type="submit" disabled={isLoading} className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium">
                     Iniciar Sesión
                   </Button>
                 </form>

@@ -9,9 +9,8 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Llama al backend para saber si el usuario está logueado
     fetch(`${baseUrl}/auth/check`, {
-      credentials: "include", // ⬅️ importante para enviar cookies HttpOnly
+      credentials: "include", 
     })
       .then((res) => setIsAuthenticated(res.ok))
       .catch(() => setIsAuthenticated(false))
